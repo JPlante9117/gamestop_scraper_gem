@@ -1,0 +1,3 @@
+class GamestopScraper::Scraper
+
+end
