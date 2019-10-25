@@ -1,8 +1,19 @@
 class GamestopScraper::CLI
 
     def run
-        menu
+        puts "                      Welcome to GameStop!                 "
+        puts "      Take a look at the newest games, or upcoming releases! "
+        puts " "
+        puts "   Please type 'new games' to see a list the top 6 new games,"
+        puts "  or 'upcoming games' to  see the top 6 games releasing soon!"
+        puts "    You may at any time type exit to close out the program. "
+        puts "  -----------------------------------------------------------"
         GamestopScraper::Scraper.scrape_game
+        
+        menu
+    end
+
+    def menu
         input = nil
         while input != 'exit'
             input = gets.strip.downcase
@@ -24,7 +35,6 @@ class GamestopScraper::CLI
                 puts "          upcoming releases          "
                 puts "-------------------------------------"
                 puts " "
-                puts "List here"
                 print_upcoming_games
                 puts " "
                 puts "Select a number to see more details on that game, or say 'menu' to return to the menu."
@@ -36,8 +46,6 @@ class GamestopScraper::CLI
                 puts "  or 'upcoming games' to  see the games releasing soon!"
                 puts " You may at any time type exit to close out the program. "
                 puts " "
-            when 'menu'
-                run
             when 'exit'
                 break
             else
@@ -46,16 +54,6 @@ class GamestopScraper::CLI
                 puts " "
             end
         end
-    end
-
-    def menu
-        puts "                      Welcome to GameStop!                 "
-        puts "      Take a look at the newest games, or upcoming releases! "
-        puts " "
-        puts "   Please type 'new games' to see a list the top 6 new games,"
-        puts "  or 'upcoming games' to  see the top 6 games releasing soon!"
-        puts "    You may at any time type exit to close out the program. "
-        puts "  -----------------------------------------------------------"
     end
 
     def print_new_games
