@@ -1,6 +1,6 @@
 class GamestopScraper::Game
 
-    attr_accessor :title, :url
+    attr_accessor :title, :url, :publisher, :rating, :platforms, :price, :description
 
     @@all = []
     @@new_games = []

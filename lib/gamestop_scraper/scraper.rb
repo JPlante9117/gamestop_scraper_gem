@@ -23,6 +23,17 @@ class GamestopScraper::Scraper
     end
 
     def self.scrape_game_details(game)
+        html = open("https://www.gamestop.com#{game.url}")
+        doc = Nokogiri::HTML(html)
+        binding.pry
+        game.publisher = doc.css(".product-publisher .pr-1")[1].text.strip
+        game.rating = doc.css("div.tab-pane").children[13].children[5].children[3].children[0].text.strip
+        game.platforms = []
+        doc.css("select.custom-select")[0].css("option").each do |systems|
+            game.platforms << systems.text.strip
+        end
+        game.price = doc.css("span.value")[0].text.strip
+        game.description = doc.css(".product-info")[0].css(".short-description").text.strip
 
     end
 

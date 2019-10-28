@@ -9,6 +9,7 @@ class GamestopScraper::CLI
         puts "    You may at any time type exit to close out the program. "
         puts "  -----------------------------------------------------------"
         GamestopScraper::Scraper.scrape_game
+        GamestopScraper::Scraper.scrape_game_details(GamestopScraper::Game.new_games[1])
         
         menu
     end
