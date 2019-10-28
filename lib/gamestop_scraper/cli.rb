@@ -34,13 +34,11 @@ class GamestopScraper::CLI
                     case input
                     when '1','2','3','4','5','6'
                         game = GamestopScraper::Game.new_games[input.to_i - 1]
-                        GamestopScraper::Scraper.scrape_game_details(game) if !game.publisher
-                        # binding.pry
+                        GamestopScraper::Scraper.scrape_game_details(game) if !game.esrb
                         puts "Title: #{game.title}"
                         puts "Publisher: #{game.publisher}"
                         puts "ESRB Rating: #{game.esrb}"
-                        # puts "Review Rating: #{game.rating}"
-                        puts "Available On: #{game.platforms.uniq.join(", ")}"
+                        puts "Available On: #{game.platforms.uniq.sort.join(", ")}"
                         puts "Price: #{game.price}"
                         puts " "
                         puts "You can request a short description of the game with 'description'!"
@@ -86,18 +84,15 @@ class GamestopScraper::CLI
                 puts " "
                 while input != 'exit' do
                     input = gets.strip.downcase
-                    game = nil
                     case input
                     when '1', '2', '3', '4', '5', '6'
                         game = GamestopScraper::Game.upcoming_releases[input.to_i - 1]
-                        GamestopScraper::Scraper.scrape_game_details(game) if !game.publisher
-                        # binding.pry
+                        GamestopScraper::Scraper.scrape_game_details(game) if !game.esrb
                         puts "Title: #{game.title}"
                         puts "Publisher: #{game.publisher}" unless game.publisher == nil
                         puts "Release Date: #{game.release_date}" unless game.release_date == nil
                         puts "ESRB Rating: #{game.esrb}" unless game.esrb == nil
-                        # puts "Review Rating: #{game.rating}"
-                        puts "Available On: #{game.platforms.uniq.join(", ")}"
+                        puts "Available On: #{game.platforms.uniq.sort.join(", ")}"
                         puts "Price: #{game.price}"
                         puts " "
                         puts "You can request a short description of the game with 'description'!"

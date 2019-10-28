@@ -6,7 +6,6 @@ class GamestopScraper::Scraper
         doc = Nokogiri::HTML(html)
         i = 0
         doc.css("div.row.key-art-carousel")[0].css(".slide").each do |game|
-            #binding.pry
             new_game = GamestopScraper::Game.new
             new_game.title = game.css("a").css(".font-bold").text.strip
             new_game.url = game.css("a").attribute("href").value
@@ -16,13 +15,11 @@ class GamestopScraper::Scraper
                     html = open("https://www.gamestop.com/search/?q=#{url_name}&lang=default")
                     doc = Nokogiri::HTML(html)
                     new_game.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
-                    new_game.platforms << doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("span.pr-1").text.strip
 
                 else
                     html = open("https://www.gamestop.com#{new_game.url}")
                     doc = Nokogiri::HTML(html)
                     new_game.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
-                    new_game.platforms << doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("span.pr-1").text.strip
 
                 end
                
@@ -43,12 +40,10 @@ class GamestopScraper::Scraper
                     html = open("https://www.gamestop.com/search/?q=#{url_name}&lang=default")
                     doc = Nokogiri::HTML(open(html))
                     upcoming_release.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
-                    upcoming_release.platforms << doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("span.pr-1").text.strip
                 else
                     html = open("https://www.gamestop.com#{upcoming_release.url}")
                     doc = Nokogiri::HTML(html)
                     upcoming_release.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
-                    upcoming_release.platforms << doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("span.pr-1").text.strip
                 end
                
             end
@@ -64,10 +59,13 @@ class GamestopScraper::Scraper
         game.publisher = doc.css(".product-publisher .pr-1")[0].text.strip unless doc.css(".product-publisher .pr-1")[0] == nil
         game.esrb = doc.css(".product-name-section").children[3].css("img").attribute("alt").value
         game.release_date = doc.css(".product-publisher .pdp-release-date")[1].text.strip.gsub("Release Date: ", "")
-        platform_exclusions= ['Select List', 'I Want', 'I Have', 'I Had']
         if doc.css("select.select-platform")[0]
             doc.css("select.select-platform")[0].css("option").each do |systems|
+               if systems.text.strip == "Nintendo Switch"
+               game.platforms << "Switch" unless game.platforms.include?("Switch")
+               else
                game.platforms << systems.text.strip unless game.platforms.include?(systems.text.strip)
+               end
             end
         else
             game.platforms << doc.css("ol.breadcrumb").children[5].children.text.strip
