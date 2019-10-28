@@ -11,12 +11,10 @@ class GamestopScraper::Scraper
             new_game.url = game.css("a").attribute("href").value
             unless new_game.url.include?("/video-games/")
                 if new_game.url.include?("/collection/")
-                    url_name = new_game.title.gsub(/[.,\/#!$%\^&\*;:{}=\-_`~()]/,"").gsub(" ", "+")
-                    html = open("https://www.gamestop.com/search/?q=#{url_name}&lang=default")
+                    url_name = CGI::escape(upcoming_release.title).gsub(/[.,\/#!$%\^&\*;:{}=\-_`~()]/,"")                    html = open("https://www.gamestop.com/search/?q=#{url_name}&lang=default")
                     doc = Nokogiri::HTML(html)
                     new_game.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
-                end
-                if new_game.url.include?("/video-games?")
+                else
                     html = open("https://www.gamestop.com#{new_game.url}")
                     doc = Nokogiri::HTML(html)
                     new_game.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
@@ -33,6 +31,19 @@ class GamestopScraper::Scraper
             upcoming_release = GamestopScraper::Game.new
             upcoming_release.url = game.css("a").attribute("href").value
             upcoming_release.title = game.css("a").css(".font-bold").text.strip
+            unless upcoming_release.url.include?("/video-games/")
+                if upcoming_release.url.include?("/collection/")
+                    url_name = CGI::escape(upcoming_release.title).gsub(/[.,\/#!$%\^&\*;:{}=\-_`~()]/,"")
+                    html = open("https://www.gamestop.com/search/?q=#{url_name}&lang=default")
+                    doc = Nokogiri::HTML(open(html))
+                    upcoming_release.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
+                else
+                    html = open("https://www.gamestop.com#{upcoming_release.url}")
+                    doc = Nokogiri::HTML(html)
+                    upcoming_release.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
+                end
+               
+            end
             GamestopScraper::Game.upcoming_releases << upcoming_release
         end
 
