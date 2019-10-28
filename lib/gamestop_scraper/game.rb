@@ -8,6 +8,7 @@ class GamestopScraper::Game
 
     def initialize
         @@all << self
+        @platforms = []
     end
 
     def self.all

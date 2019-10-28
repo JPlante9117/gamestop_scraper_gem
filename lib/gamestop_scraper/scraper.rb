@@ -16,10 +16,14 @@ class GamestopScraper::Scraper
                     html = open("https://www.gamestop.com/search/?q=#{url_name}&lang=default")
                     doc = Nokogiri::HTML(html)
                     new_game.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
+                    new_game.platforms << doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("span.pr-1").text.strip
+
                 else
                     html = open("https://www.gamestop.com#{new_game.url}")
                     doc = Nokogiri::HTML(html)
                     new_game.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
+                    new_game.platforms << doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("span.pr-1").text.strip
+
                 end
                
             end
@@ -39,10 +43,12 @@ class GamestopScraper::Scraper
                     html = open("https://www.gamestop.com/search/?q=#{url_name}&lang=default")
                     doc = Nokogiri::HTML(open(html))
                     upcoming_release.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
+                    upcoming_release.platforms << doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("span.pr-1").text.strip
                 else
                     html = open("https://www.gamestop.com#{upcoming_release.url}")
                     doc = Nokogiri::HTML(html)
                     upcoming_release.url = doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("a").attribute("href").value
+                    upcoming_release.platforms << doc.css(".tab-pane .row .product-grid-wrapper .row .product-grid-tile-wrapper")[0].css("span.pr-1").text.strip
                 end
                
             end
@@ -55,14 +61,16 @@ class GamestopScraper::Scraper
         puts "scraping details . . ."
         html = open("https://www.gamestop.com#{game.url}")
         doc = Nokogiri::HTML(html)
-        # binding.pry
-        game.publisher = doc.css(".product-publisher .pr-1")[0].text.strip
+        game.publisher = doc.css(".product-publisher .pr-1")[0].text.strip unless doc.css(".product-publisher .pr-1")[0] == nil
         game.esrb = doc.css(".product-name-section").children[3].css("img").attribute("alt").value
         game.release_date = doc.css(".product-publisher .pdp-release-date")[1].text.strip.gsub("Release Date: ", "")
-        game.rating = doc.css("div.tab-pane").children[13].children[5].children[3].children[0].text.strip
-        game.platforms = []
-        doc.css("select.custom-select")[0].css("option").each do |systems|
-            game.platforms << systems.text.strip
+        platform_exclusions= ['Select List', 'I Want', 'I Have', 'I Had']
+        if doc.css("select.select-platform")[0]
+            doc.css("select.select-platform")[0].css("option").each do |systems|
+               game.platforms << systems.text.strip unless game.platforms.include?(systems.text.strip)
+            end
+        else
+            game.platforms << doc.css("ol.breadcrumb").children[5].children.text.strip
         end
         game.price = doc.css("span.value")[0].text.strip
         game.description = doc.css(".product-info")[0].css(".short-description").text.strip
