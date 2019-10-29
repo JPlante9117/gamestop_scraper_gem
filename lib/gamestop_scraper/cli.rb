@@ -37,7 +37,7 @@ class GamestopScraper::CLI
                     when @input == 'menu'
                         menu
                     when @input == 'd'
-                        game_description
+                        game_description("ng")
                     when @input == 'exit'
                         break
                     when @input == 'commands'
@@ -63,7 +63,7 @@ class GamestopScraper::CLI
                     when @input == 'menu'
                         menu
                     when @input == 'd'
-                        game_description
+                        game_description("ug")
                     when @input == 'exit'
                         break
                     when @input == 'commands'
@@ -128,11 +128,11 @@ class GamestopScraper::CLI
         puts " "
     end
 
-    def game_description
+    def game_description(section)
         if @game
             puts " "
             puts game.description.colorize(:light_green)
-            commands_detail
+            commands_detail(section)
             
         else
             puts " "
@@ -145,7 +145,7 @@ class GamestopScraper::CLI
         @game = array[@input.to_i - 1]
         GamestopScraper::Scraper.scrape_game_details(@game) if !game.esrb
         puts "Title: ".colorize(:light_blue) + @game.title.colorize(:light_cyan)
-        unless @game.publisher == ""
+        unless @game.publisher == nil || @game.publisher == ""
             puts ("Publisher: ".colorize(:light_blue) + @game.publisher.colorize(:light_cyan))
         end
         unless @game.release_date == ""
