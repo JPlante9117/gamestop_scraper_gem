@@ -9,13 +9,13 @@ class GamestopScraper::CLI
     end
 
     def menu
-        puts "                      Welcome to ".colorize(:yellow) + "Game".colorize(:red) + "Stop".colorize(:white) + "!                 ".colorize(:yellow)
+        puts "                      Welcome to ".colorize(:yellow) + "Game".colorize(:red) + "Stop".colorize(:white) + "!".colorize(:yellow)
         puts "      Take a look at the newest games, or upcoming releases! ".colorize(:yellow)
         puts " "
-        puts "   Please type ".colorize(:yellow) + "'ng'".colorize(:light_blue) + " to see a list the top 6 new games,".colorize(:yellow)
-        puts "  or ".colorize(:yellow) + "'ug'".colorize(:light_blue) + " to  see the top 6 games releasing soon!".colorize(:yellow)
-        puts "    You may at any time type ".colorize(:yellow) + "'exit'".colorize(:light_red) + " to close out the program. ".colorize(:yellow)
-        puts "  -----------------------------------------------------------".colorize(:yellow)
+        puts "      Please type ".colorize(:yellow) + "'ng'".colorize(:light_blue) + " to see a list the top 6 new games,".colorize(:yellow)
+        puts "     or ".colorize(:yellow) + "'ug'".colorize(:light_blue) + " to  see the top 6 games releasing soon!".colorize(:yellow)
+        puts "       You may at any time type ".colorize(:yellow) + "'exit'".colorize(:light_red) + " to close out the program. ".colorize(:yellow)
+        puts "  --------------------------------------------------------------".colorize(:yellow)
         @input = nil
         while @input != 'exit' do
             @input = gets.strip.downcase
@@ -23,9 +23,9 @@ class GamestopScraper::CLI
             when 'ng'
                 @game = nil
                 puts " "
-                puts "Here's a list of the hottest".colorize(:yellow)
-                puts "         new games          ".colorize(:yellow)
-                puts "----------------------------".colorize(:yellow)
+                puts "   Here's a list of the hottest".colorize(:yellow)
+                puts "            new games          ".colorize(:yellow)
+                puts "-------------------------------".colorize(:yellow)
                 puts " "
                 print_new_games
                 select_game_details
@@ -49,9 +49,9 @@ class GamestopScraper::CLI
             when 'ug'
                 @game = nil
                 puts " "
-                puts "Here's a list of the most anticipated".colorize(:yellow)
-                puts "          upcoming releases          ".colorize(:yellow)
-                puts "-------------------------------------".colorize(:yellow)
+                puts "   Here's a list of the most anticipated".colorize(:yellow)
+                puts "             upcoming releases          ".colorize(:yellow)
+                puts "----------------------------------------".colorize(:yellow)
                 puts " "
                 print_upcoming_games
                 select_game_details
@@ -83,11 +83,11 @@ class GamestopScraper::CLI
     end
 
     def print_new_games
-        GamestopScraper::Game.new_games.each.with_index(1) { |game, index| puts "#{index}.".colorize(:light_blue) + " #{game.title}".colorize(:yellow)}
+        GamestopScraper::Game.new_games.each.with_index(1) { |game, index| puts " #{index}. ".colorize(:light_blue) + game.title.colorize(:light_cyan)}
     end
 
     def print_upcoming_games
-        GamestopScraper::Game.upcoming_releases.each.with_index(1) { |game, index| puts "#{index}.".colorize(:light_blue) + " #{game.title}".colorize(:yellow)}
+        GamestopScraper::Game.upcoming_releases.each.with_index(1) { |game, index| puts " #{index}. ".colorize(:light_blue) + game.title.colorize(:light_cyan)}
     end
 
     def error_handler
@@ -114,7 +114,7 @@ class GamestopScraper::CLI
         end
         puts " "
         puts "  Type a number ".colorize(:yellow) + "(1-#{array.length})".colorize(:light_blue) + " to see #{blurb}!".colorize(:yellow)
-        puts "If you have already selected a game, type ".colorize(:yellow) + "'description'".colorize(:light_blue) + "!".colorize(:yellow)
+        puts "  If you have already selected a game, type ".colorize(:yellow) + "'d'".colorize(:light_blue) + "!".colorize(:yellow)
         puts "    to receive a short description of that game!".colorize(:yellow)
         puts "  Or, you may type ".colorize(:yellow) + "'menu'".colorize(:light_blue) + " to return to the main menu.".colorize(:yellow)
         puts " "
@@ -144,16 +144,16 @@ class GamestopScraper::CLI
     def detail_results(array)
         @game = array[@input.to_i - 1]
         GamestopScraper::Scraper.scrape_game_details(@game) if !game.esrb
-        puts "Title: ".colorize(:light_blue) + @game.title.colorize(:light_cyan)
+        puts " Title: ".colorize(:light_blue) + @game.title.colorize(:light_cyan)
         unless @game.publisher == nil || @game.publisher == ""
-            puts ("Publisher: ".colorize(:light_blue) + @game.publisher.colorize(:light_cyan))
+            puts " Publisher: ".colorize(:light_blue) + @game.publisher.colorize(:light_cyan)
         end
         unless @game.release_date == ""
-            puts ("Release Date: ".colorize(:light_blue) + @game.release_date.colorize(:light_cyan))
+            puts " Release Date: ".colorize(:light_blue) + @game.release_date.colorize(:light_cyan)
         end
-        puts "ESRB Rating: ".colorize(:light_blue) + @game.esrb.colorize(:light_cyan)
-        puts "Available On: ".colorize(:light_blue) + @game.platforms.uniq.sort.join(", ").colorize(:light_cyan)
-        puts "Price: ".colorize(:light_blue) + @game.price.colorize(:light_cyan)
+        puts " ESRB Rating: ".colorize(:light_blue) + @game.esrb.colorize(:light_cyan)
+        puts " Available On: ".colorize(:light_blue) + @game.platforms.uniq.sort.join(", ").colorize(:light_cyan)
+        puts " Price: ".colorize(:light_blue) + @game.price.colorize(:light_cyan)
         puts " "
         puts "You can request a short description of the game with ".colorize(:yellow) + "'d'".colorize(:light_blue) + "!".colorize(:yellow)
         puts " "
