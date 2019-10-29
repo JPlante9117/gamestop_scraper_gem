@@ -131,6 +131,8 @@ class GamestopScraper::CLI
     def game_description(section)
         if @game
             puts " "
+            puts "Description for ".colorize(:light_green) + @game.title.colorize(:light_cyan)
+            puts " "
             puts game.description.colorize(:light_green)
             commands_detail(section)
             
