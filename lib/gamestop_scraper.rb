@@ -8,6 +8,7 @@ end
 require 'nokogiri'
 require 'open-uri'
 require 'pry'
+require 'colorize'
 require 'webrick'
 
 require_relative './gamestop_scraper/cli'
