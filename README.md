@@ -1,8 +1,6 @@
 # GamestopScraper
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gamestop_scraper`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to the GameStop Scraper! This gem will allow you to scrape the listed newly released video games as well as those releasing soon. Each game gets scraped from the home page and instantiated as an accessible object. You can pull information about each of the games, such as price, ESRB rating, and more!
 
 ## Installation
 
