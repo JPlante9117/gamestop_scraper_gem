@@ -2,6 +2,8 @@
 
 Welcome to the GameStop Scraper! This gem will allow you to scrape the listed newly released video games as well as those releasing soon. Each game gets scraped from the home page and instantiated as an accessible object. You can pull information about each of the games, such as price, ESRB rating, and more!
 
+WE ARE ADDING TO THE README
+
 ## Installation
 
 Add this line to your application's Gemfile:
