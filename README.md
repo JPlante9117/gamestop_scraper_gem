@@ -2,7 +2,7 @@
 
 Welcome to the GameStop Scraper! This gem will allow you to scrape the listed newly released video games as well as those releasing soon. Each game gets scraped from the home page and instantiated as an accessible object. You can pull information about each of the games, such as price, ESRB rating, and more!
 
-WE ARE ADDING TO THE README
+For run instructions, look in the Usage section.
 
 ## Installation
 
@@ -22,7 +22,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+There are several other gems required for 'gamestop_scaper' to work, so make sure to run ```bundle install``` prior prior to use.
+
+In order to run this program, run 'ruby bin/releases' in your command line.
 
 ## Development
 
@@ -32,8 +34,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/gamestop_scraper. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/JPlante9117/gamestop_scraper_gem. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## Code of Conduct
 
-Everyone interacting in the GamestopScraper project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/gamestop_scraper/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the GamestopScraper project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/JPlante9117/gamestop_scraper_gem/blob/master/CODE_OF_CONDUCT.md).

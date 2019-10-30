@@ -5,11 +5,10 @@ module GamestopScraper
   # Your code goes here...
 end
 
-require 'nokogiri'
+require 'bundler/setup'
+Bundler.require
+
 require 'open-uri'
-require 'pry'
-require 'colorize'
-require 'webrick'
 
 require_relative './gamestop_scraper/cli'
 require_relative './gamestop_scraper/game'
