@@ -12,7 +12,7 @@ class GamestopScraper::CLI
 
     def menu
         puts `clear`
-        puts "                      Welcome to ".colorize(:yellow) + "Game".colorize(:red) + "Stop".colorize(:white) + "!".colorize(:yellow)
+        puts "                      Welcome to ".colorize(:yellow) + "Game".colorize(:white) + "Stop".colorize(:red) + "!".colorize(:yellow)
         puts "     Take a look at the newest games, or upcoming releases! ".colorize(:yellow)
         puts " "
         puts "      Please type ".colorize(:yellow) + "'ng'".colorize(:light_blue) + " to see a list the top 6 new games,".colorize(:yellow)
