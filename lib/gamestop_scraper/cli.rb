@@ -1,9 +1,11 @@
 class GamestopScraper::CLI
 
     attr_accessor :game, :input
+    attr_reader :scraper
 
     def run
-        GamestopScraper::Scraper.scrape_game
+        @scraper = GamestopScraper::Scraper.new
+        @scraper.scrape_game
         
         menu
         puts " "
@@ -148,7 +150,7 @@ class GamestopScraper::CLI
 
     def detail_results(array)
         @game = array[@input.to_i - 1]
-        GamestopScraper::Scraper.scrape_game_details(@game) if !@game.esrb
+        @scraper.scrape_game_details(@game) if !@game.esrb
         puts "        Title: ".colorize(:light_blue) + @game.title.colorize(:light_cyan)
         unless @game.publisher == nil || @game.publisher == ""
             puts "        Publisher: ".colorize(:light_blue) + @game.publisher.colorize(:light_cyan)

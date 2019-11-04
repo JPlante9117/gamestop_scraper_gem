@@ -1,6 +1,6 @@
 class GamestopScraper::Scraper
 
-    def self.scrape_game
+    def scrape_game
         html = open("https://www.gamestop.com/")
         doc = Nokogiri::HTML(html)
         i = 0
@@ -19,7 +19,7 @@ class GamestopScraper::Scraper
         end
     end
 
-    def self.scrape_game_details(game)
+    def scrape_game_details(game)
         unless game.url.include?("/video-games/")
             if game.url.include?("/collection/")
                 url_name = CGI::escape(game.title).gsub(/[.,\/#!$%\^&\*;:{}=\-_`~()]/,"")
